@@ -1,0 +1,528 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="DixService" targetNamespace="http://service.dataxmldistribution.argos.cls.fr/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://service.dataxmldistribution.argos.cls.fr/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:x1="http://service.dataxmldistribution.argos.cls.fr/types" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://service.dataxmldistribution.argos.cls.fr/types" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://service.dataxmldistribution.argos.cls.fr/types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:x1="http://service.dataxmldistribution.argos.cls.fr/types" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			
+			<xs:complexType name="periodType">
+				<xs:sequence>
+					<xs:element name="startDate" type="xs:dateTime" />
+					<xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:simpleType name="referenceDateType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BEST_MSG_DATE" />
+					<xs:enumeration value="MODIFICATION_DATE" />
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:simpleType name="argDistribType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="A" />
+					<xs:enumeration value="O" />
+					<xs:enumeration value="B" />
+				</xs:restriction>
+			</xs:simpleType>
+		
+			<xs:complexType name="baseRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+					
+					<xs:choice>
+						<xs:element name="programNumber" type="xs:string" />
+						<xs:element name="platformId" type="xs:string" />
+					</xs:choice>
+					
+					<xs:element minOccurs="0" name="nbPassByPtt" type="xs:int" />
+					
+					<xs:choice>
+						<xs:element name="period" type="tns:periodType" />
+						<xs:element name="nbDaysFromNow" type="xs:int" />
+					</xs:choice>
+					<!-- By default the reference is BEST_MSG_DATE -->
+					<xs:element minOccurs="0" name="referenceDate" type="tns:referenceDateType" />
+					
+					<xs:element minOccurs="0" name="locClass" type="xs:string" />
+					<xs:element minOccurs="0" name="geographicArea" type="xs:string" />
+					<xs:element minOccurs="0" name="compression" type="xs:int" />
+					<xs:element minOccurs="0" name="mostRecentPassages" type="xs:boolean" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="xmlRequestType">
+				<xs:complexContent>
+					<xs:extension base="tns:baseRequestType">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="displayLocation" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayDiagnostic" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayMessage" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayCollect" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayRawData" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displaySensor" type="xs:boolean" />
+							<xs:element minOccurs="0" name="argDistrib" type="tns:argDistribType" />
+							<xs:element minOccurs="0" name="displayImageLocation" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayHexId" type="xs:boolean" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			
+			<xs:complexType name="csvRequestType">
+				<xs:complexContent>
+					<xs:extension base="tns:xmlRequestType">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="showHeader" type="xs:boolean" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="kmlRequestType">
+				<xs:complexContent>
+					<xs:extension base="tns:baseRequestType">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="displayDescription" type="xs:boolean" />
+							<xs:element minOccurs="0" name="displayDiagnostic" type="xs:boolean" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			
+			<xs:complexType name="xsdRequestType">
+				<xs:sequence />
+			</xs:complexType>
+			
+			<xs:complexType name="platformListRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+					
+					<xs:choice>
+						<xs:element minOccurs="0" name="platformId" type="xs:string" />
+			            <xs:element minOccurs="0" name="platformHexId" type="xs:string" />
+					</xs:choice>				
+					
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="observationRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+					
+					<xs:choice>
+						<xs:element name="programNumber" type="xs:string" />
+						<xs:element name="platformId" type="xs:string" />
+						<xs:element name="wmo" type="xs:string" />
+					</xs:choice>
+					
+					<xs:element minOccurs="0" name="nbMaxObs" type="xs:int" />
+					
+					<xs:choice>
+						<xs:element name="period" type="tns:periodType" />
+						<xs:element name="nbDaysFromNow" type="xs:int" />
+					</xs:choice>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="aopRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+					<xs:element name="pmtId" type="xs:string" />
+					<xs:element name="freehex" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="consultMessageRequestType">
+				<xs:sequence>
+					<xs:element name="username" type="xs:string" />
+					<xs:element name="password" type="xs:string" />
+					<xs:element name="cmdId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="stringResponseType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="streamResponseType">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary" xmlns:ns1="http://www.w3.org/2005/05/xmlmime" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="DixException">
+				<xs:sequence />
+			</xs:complexType>
+			
+			<xs:element name="csvRequest" type="tns:csvRequestType" />
+			<xs:element name="csvResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="kmlRequest" type="tns:kmlRequestType" />
+			<xs:element name="kmlResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="streamXmlRequest" type="tns:xmlRequestType" />
+			<xs:element name="streamXmlResponse" type="tns:streamResponseType" />
+			
+			<xs:element name="xmlRequest" type="tns:xmlRequestType" />
+			<xs:element name="xmlResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="xsdRequest" type="tns:xsdRequestType" />
+			<xs:element name="xsdResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="platformListRequest" type="tns:platformListRequestType" />
+			<xs:element name="platformListResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="observationRequest" type="tns:observationRequestType" />
+			<xs:element name="observationResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="observationXmlRequest" type="tns:observationRequestType" />
+			<xs:element name="observationXmlResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="aopRequest" type="tns:aopRequestType" />
+			<xs:element name="aopResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="sendMessageRequest" type="tns:sendMessageRequestType" />
+			<xs:element name="sendMessageResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="consultMessageRequest" type="tns:consultMessageRequestType" />
+			<xs:element name="consultMessageResponse" type="tns:stringResponseType" />
+			
+			<xs:element name="DixException" type="tns:DixException" />
+		</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendMessageResponse">
+    <wsdl:part element="x1:sendMessageResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="csvRequest">
+    <wsdl:part element="x1:csvRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultMessageRequest">
+    <wsdl:part element="x1:consultMessageRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="xsdResponse">
+    <wsdl:part element="x1:xsdResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="observationXmlResponse">
+    <wsdl:part element="x1:observationXmlResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="observationXmlRequest">
+    <wsdl:part element="x1:observationXmlRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="aopRequest">
+    <wsdl:part element="x1:aopRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="kmlResponse">
+    <wsdl:part element="x1:kmlResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="platformListResponse">
+    <wsdl:part element="x1:platformListResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="kmlRequest">
+    <wsdl:part element="x1:kmlRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultMessageResponse">
+    <wsdl:part element="x1:consultMessageResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="aopResponse">
+    <wsdl:part element="x1:aopResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="platformListRequest">
+    <wsdl:part element="x1:platformListRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="observationResponse">
+    <wsdl:part element="x1:observationResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DixException">
+    <wsdl:part element="x1:DixException" name="DixException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="xsdRequest">
+    <wsdl:part element="x1:xsdRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="observationRequest">
+    <wsdl:part element="x1:observationRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="streamXmlRequest">
+    <wsdl:part element="x1:streamXmlRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="xmlResponse">
+    <wsdl:part element="x1:xmlResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendMessageRequest">
+    <wsdl:part element="x1:sendMessageRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="xmlRequest">
+    <wsdl:part element="x1:xmlRequest" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="csvResponse">
+    <wsdl:part element="x1:csvResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="streamXmlResponse">
+    <wsdl:part element="x1:streamXmlResponse" name="params">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DixServicePortType">
+    <wsdl:operation name="getCsv">
+      <wsdl:input message="tns:csvRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:csvResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getStreamXml">
+      <wsdl:input message="tns:streamXmlRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:streamXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getKml">
+      <wsdl:input message="tns:kmlRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:kmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <wsdl:input message="tns:xmlRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:xmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getXsd">
+      <wsdl:input message="tns:xsdRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:xsdResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformList">
+      <wsdl:input message="tns:platformListRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:platformListResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObsCsv">
+      <wsdl:input message="tns:observationRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:observationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObsXml">
+      <wsdl:input message="tns:observationXmlRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:observationXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAop">
+      <wsdl:input message="tns:aopRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:aopResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <wsdl:input message="tns:sendMessageRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:sendMessageResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="consultMessage">
+      <wsdl:input message="tns:consultMessageRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:consultMessageResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DixException" name="DixException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DixServiceSoapBinding" type="tns:DixServicePortType">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getCsv">
+      <soap12:operation soapAction="Get Argos data on CSV format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getStreamXml">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getKml">
+      <soap12:operation soapAction="Get Argos data on KML format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <soap12:operation soapAction="Get Argos data on XML format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getXsd">
+      <soap12:operation soapAction="Get the XSD for the XML format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatformList">
+      <soap12:operation soapAction="Get the list of platforms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObsCsv">
+      <soap12:operation soapAction="Get the observations on CSV Format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObsXml">
+      <soap12:operation soapAction="Get the observations on XML Format" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAop">
+      <soap12:operation soapAction="Get the orbital parameters" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <soap12:operation soapAction="Send free hexadecimal message" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="consultMessage">
+      <soap12:operation soapAction="Consult message status" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DixException">
+        <soap12:fault name="DixException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DixService">
+    <wsdl:port binding="tns:DixServiceSoapBinding" name="DixServicePort">
+      <soap12:address location="http://ws-argos.cls.fr/argosDws/services/DixService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
