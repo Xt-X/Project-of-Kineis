@@ -4,6 +4,7 @@
 Light : 0 to 3000 lumens : 12 bits full precision 
 Pressure : 950 to 1050 hPa +/- 0.12 hPa = 833 values : 10 bits  full precision
 Temperature : -40 to 85°C +/- 0.01°C = = 12 500 values : 14 bits full precision
+
 Accelerometer : 16 bits per axis for resolution. The measurement range depends on the sensitivy selected. 
 
 * -2/2 g : precision of 0,000061 g/bits (16384 bit/g)
@@ -35,8 +36,8 @@ send 3 or 4 message a day.
 
 # References
 
-Sensors list : https://mangoh.io/uploaded-documents/Reference/mangOH%20Red/Discover/Reference%20Manual/mangOH_Red_Developers_Guide.pdf
-Pressure/Temperature BM280 : https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
-Gyro/Accelerometor BMI160 : https://www.mouser.com/datasheet/2/783/BST-BMI160-DS000-07-786474.pdf
-Light PNJ4K01F : https://industrial.panasonic.com/content/data/SC/ds/ds4/PNJ4K01F_E.pdf
+* Sensors list : https://mangoh.io/uploaded-documents/Reference/mangOH%20Red/Discover/Reference%20Manual/mangOH_Red_Developers_Guide.pdf
+* Pressure/Temperature BM280 : https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
+* Gyro/Accelerometor BMI160 : https://www.mouser.com/datasheet/2/783/BST-BMI160-DS000-07-786474.pdf
+* Light PNJ4K01F : https://industrial.panasonic.com/content/data/SC/ds/ds4/PNJ4K01F_E.pdf
 
