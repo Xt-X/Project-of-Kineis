@@ -1,0 +1,17 @@
+cflags:
+{
+    -std=c99
+}
+sources:
+{
+    helloWorld.c
+}
+requires:
+{
+    api:
+    {
+    	 modemServices/le_adc.api
+	 positioning/le_posCtrl.api
+         positioning/le_pos.api
+    }
+}

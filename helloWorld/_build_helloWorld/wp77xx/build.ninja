@@ -1,0 +1,160 @@
+# Build script for application 'helloWorld'
+
+# == Auto-generated file.  Do not edit. ==
+
+builddir =./_build_helloWorld/wp77xx
+
+cFlags = -I ./_build_helloWorld/wp77xx -I/home/mangoh/legato_framework/legato/interfaces -I/home/mangoh/legato_framework/legato/framework/include -I/home/mangoh/legato_framework/legato/apps/sample/helloWorld
+
+cxxFlags = -I ./_build_helloWorld/wp77xx -I/home/mangoh/legato_framework/legato/interfaces -I/home/mangoh/legato_framework/legato/framework/include -I/home/mangoh/legato_framework/legato/apps/sample/helloWorld
+
+ldFlags =
+
+target = wp77xx
+
+ifgenFlags =  --import-dir /home/mangoh/legato_framework/legato/interfaces --import-dir /home/mangoh/legato_framework/legato/framework/include --import-dir /home/mangoh/legato_framework/legato/apps/sample/helloWorld
+
+rule CompileC
+  description = Compiling C source
+  depfile = $out.d
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -MMD -MF $out.d -c $in -o $out -DLE_FILENAME=`basename $in` -Wall -fPIC -Werror -fvisibility=hidden -DMK_TOOLS_BUILD  -DLEGATO_EMBEDDED $cFlags
+
+rule CompileCxx
+  description = Compiling C++ source
+  depfile = $out.d
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -MMD -MF $out.d -c $in -o $out -DLE_FILENAME=`basename $in` -Wall -fPIC -Werror -fvisibility=hidden  -DMK_TOOLS_BUILD  -DLEGATO_EMBEDDED $cxxFlags
+
+rule LinkCLib
+  description = Linking C library
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -shared -o $out $in $ldFlags
+
+rule LinkCxxLib
+  description = Linking C++ library
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -shared -o $out $in $ldFlags
+
+rule LinkCExe
+  description = Linking C executable
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-gcc --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -fPIE -pie -o $out $in $ldFlags
+
+rule LinkCxxExe
+  description = Linking C++ executable
+  command =  /opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-g++ --sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi -fPIE -pie -o $out $in $ldFlags
+
+rule CompileJava
+  description = Compiling Java source
+  command = javac -cp $classPath -d `dirname $out` $in && touch $out
+
+rule MakeJar
+  description = Making JAR file
+  command = INDIR=`dirname $in`; find $$INDIR -name '*.class' -printf "-C $$INDIR\n%P\n"|xargs jar -cf $out
+
+rule MakeKernelModule
+  description = Build kernel driver module
+  depfile = $out.d
+  command = make -C $in
+
+rule BuildExternal
+  description = Running external build step
+  command = cd $builddir/$workingdir && $
+            export CFLAGS="--sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi $cFlags" $
+            CXXFLAGS="--sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi $cxxFlags" $
+            LDFLAGS="--sysroot=/opt/swi/y22-ext-SWI9X06Y_02.18.05.00/sysroots/armv7a-neon-poky-linux-gnueabi $ldFlags" $
+            PATH="$${LEGATO_ROOT}/bin:/opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi:/opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/usr/bin:/opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/bin:/opt/swi/y22-ext-wp77xx/sysroots/x86_64-pokysdk-linux/sbin:$$PATH" $
+            && $
+            $externalCommand
+
+rule GenInterfaceCode
+  description = Generating IPC interface code
+  command = ifgen --output-dir $outputDir $ifgenFlags $in
+
+rule GenPyApiCExtension
+  description = Generating Python API C Extension
+  command = cextgenerator.py $in -o $workDir > /dev/null
+rule CopyFile
+  description = Copying file
+  command = cp -d -f -T $in $out
+
+rule RegenNinjaScript
+  description = Regenerating build script
+  generator = 1
+  command = mkapp --dont-run-ninja "-v" "-t" "wp77xx" "helloWorld.adef"
+
+rule BundleFile
+  description = Bundling file
+  command = legato-install -m $modeFlags $in $out
+
+rule MakeAppInfoProperties
+  description = Creating info.properties
+  command = rm -f $out && $
+            md5=$$( ( cd $workingDir/staging && $
+                      find -P -print0 |LC_ALL=C sort -z && $
+                      find -P -type f -print0 |LC_ALL=C sort -z |xargs -0 md5sum && $
+                      find -P -type l -print0 |LC_ALL=C sort -z |xargs -0 -r -n 1 readlink $
+                    ) | md5sum) && $
+            md5=$${md5%% *} && $
+            ( echo "app.name=$name" && $
+              echo "app.md5=$$md5" && $
+              echo "app.version=$version" && $
+              echo "legato.version=`cat $$LEGATO_ROOT/version`" $
+            ) > $out
+
+rule PackApp
+  description = Packaging app
+  command = $
+            mtime=`stat -c %Y $adefPath` && $
+            find $workingDir/staging -exec touch --no-dereference --date=@$$mtime {} \; && $
+            (cd $workingDir/staging && find . -print0 | LC_ALL=C sort -z |tar --no-recursion --null -T - -cjf - ) > $workingDir/$name.$target && $
+            tarballSize=`stat -c '%s' $workingDir/$name.$target` && $
+            md5=`grep '^app.md5=' $in | sed 's/^app.md5=//'` && $
+            ( printf '{\n' && $
+              printf '"command":"updateApp",\n' && $
+              printf '"name":"$name",\n' && $
+              printf '"version":"$version",\n' && $
+              printf '"md5":"%s",\n' "$$md5" && $
+              printf '"size":%s\n' "$$tarballSize" && $
+              printf '}' && $
+              cat $workingDir/$name.$target $
+            ) > $out
+
+rule BinPackApp
+  description = Packaging app for distribution.
+  command = cp -r $stagingDir/* $workingDir/ && $
+            rm $workingDir/info.properties $workingDir/root.cfg && $
+            mtime=`stat -c %Y $adefPath` && $
+            find $workingDir -exec touch  --no-dereference --date=@$$mtime {} \; && $
+            (cd $workingDir/ && find . -print0 |LC_ALL=C sort -z  |tar --no-recursion --null -T - -cjf - ) > $out
+
+build _build_helloWorld/wp77xx/staging/read-only/lib/libComponent_helloComponent.so: LinkCLib $builddir/component/1a12b53bbb32222bfda7d166ac967879/obj/f4da7aa612fe3911c0610eb39f6021f7.o $builddir/component/1a12b53bbb32222bfda7d166ac967879/obj/_componentMain.c.o | /home/mangoh/legato_framework/legato/build/wp77xx/framework/lib/liblegato.so
+  ldFlags =  -L_build_helloWorld/wp77xx/staging/read-only/lib -Wl,--enable-new-dtags,-rpath="\$$ORIGIN/../lib" "-L$$LEGATO_BUILD/framework/lib" -llegato -lpthread -lrt -lm
+
+build $builddir/component/1a12b53bbb32222bfda7d166ac967879/obj/f4da7aa612fe3911c0610eb39f6021f7.o: CompileC /home/mangoh/legato_framework/legato/apps/sample/helloWorld/helloComponent/helloWorld.c
+  cFlags = $cFlags -I$builddir/component/1a12b53bbb32222bfda7d166ac967879/src -DLE_COMPONENT_NAME=helloComponent -DLE_LOG_SESSION=helloComponent_LogSession  -DLE_LOG_LEVEL_FILTER_PTR=helloComponent_LogLevelFilterPtr  "-DCOMPONENT_INIT=LE_CI_LINKAGE LE_SHARED void _helloComponent_COMPONENT_INIT()"
+
+build $builddir/component/1a12b53bbb32222bfda7d166ac967879/obj/_componentMain.c.o: CompileC $builddir/component/1a12b53bbb32222bfda7d166ac967879/src/_componentMain.c
+  cFlags = $cFlags -I$builddir/component/1a12b53bbb32222bfda7d166ac967879/src -DLE_COMPONENT_NAME=helloComponent -DLE_LOG_SESSION=helloComponent_LogSession  -DLE_LOG_LEVEL_FILTER_PTR=helloComponent_LogLevelFilterPtr  "-DCOMPONENT_INIT=LE_CI_LINKAGE LE_SHARED void _helloComponent_COMPONENT_INIT()"
+
+build $builddir/app/helloWorld/obj/helloWorld/_main.c.o: CompileC _build_helloWorld/wp77xx/app/helloWorld/src/helloWorld/_main.c
+  cFlags = $cFlags -DLE_COMPONENT_NAME=helloWorld_exe -DLE_LOG_SESSION=helloWorld_exe_LogSession -DLE_LOG_LEVEL_FILTER_PTR=helloWorld_exe_LogLevelFilterPtr 
+
+build $builddir/app/helloWorld/obj/helloWorld/helloWorld: LinkCExe $builddir/app/helloWorld/obj/helloWorld/_main.c.o | _build_helloWorld/wp77xx/staging/read-only/lib/libComponent_helloComponent.so /home/mangoh/legato_framework/legato/build/wp77xx/framework/lib/liblegato.so /home/mangoh/legato_framework/legato/build/$target/framework/lib/liblegato.so
+  ldFlags = -rdynamic -Wl,--enable-new-dtags,-rpath="\$$ORIGIN/../lib" -L_build_helloWorld/wp77xx/staging/read-only/lib "-L_build_helloWorld/wp77xx/staging/read-only/lib" -lComponent_helloComponent "-L$$LEGATO_BUILD/framework/lib" -llegato -lpthread -lrt -ldl -lm $ldFlags
+
+build $builddir/app/helloWorld/staging/read-only/lib/libComponent_helloComponent.so : BundleFile _build_helloWorld/wp77xx/staging/read-only/lib/libComponent_helloComponent.so
+  modeFlags = u+rw+x,g+r+x,o+x+r-w
+
+build $builddir/app/helloWorld/staging/read-only/bin/helloWorld : BundleFile $builddir/app/helloWorld/obj/helloWorld/helloWorld
+  modeFlags = u+rw+x,g+r+x,o+x+r-w
+
+build $builddir/app/helloWorld/staging/info.properties : MakeAppInfoProperties | $builddir/app/helloWorld/staging/read-only/lib/libComponent_helloComponent.so $builddir/app/helloWorld/staging/read-only/bin/helloWorld $builddir/app/helloWorld/staging/root.cfg
+  name = helloWorld
+  version = 
+  workingDir = $builddir/app/helloWorld
+
+build helloWorld.$target.update: PackApp $builddir/app/helloWorld/staging/info.properties
+  name = helloWorld
+  adefPath = /home/mangoh/legato_framework/legato/apps/sample/helloWorld/helloWorld.adef
+  version = 
+  workingDir = $builddir/app/helloWorld
+
+build _build_helloWorld/wp77xx/build.ninja: RegenNinjaScript | /home/mangoh/legato_framework/legato/apps/sample/helloWorld/helloComponent/Component.cdef
+

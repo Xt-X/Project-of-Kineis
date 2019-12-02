@@ -1,0 +1,10 @@
+# ninja log v5
+1	557	1548430346	_build_helloWorld/wp77xx/component/1a12b53bbb32222bfda7d166ac967879/obj/f4da7aa612fe3911c0610eb39f6021f7.o	770ebd70206cf999
+4	557	1548430346	_build_helloWorld/wp77xx/component/1a12b53bbb32222bfda7d166ac967879/obj/_componentMain.c.o	159e4968a255ef0b
+12	558	1548430346	_build_helloWorld/wp77xx/app/helloWorld/obj/helloWorld/_main.c.o	3ad4e61fc3386636
+557	653	1548430346	_build_helloWorld/wp77xx/staging/read-only/lib/libComponent_helloComponent.so	44765ac3e1141bbc
+654	659	1548430346	_build_helloWorld/wp77xx/app/helloWorld/staging/read-only/lib/libComponent_helloComponent.so	eb4ff47f73717de4
+653	705	1548430346	_build_helloWorld/wp77xx/app/helloWorld/obj/helloWorld/helloWorld	7f3823713ff55edb
+705	709	1548430346	_build_helloWorld/wp77xx/app/helloWorld/staging/read-only/bin/helloWorld	bbb4faa0e1c58e86
+709	756	1548430346	_build_helloWorld/wp77xx/app/helloWorld/staging/info.properties	6ecba4f795c7f75c
+756	822	1548430346	helloWorld.wp77xx.update	3cbe5442686ccd00

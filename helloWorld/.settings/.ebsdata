@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LegatoProject:LegatoBinProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:LegatoProject="http://legatoProject.ecore" etpID="Legato 18.09 for WP77 R9.1">
+  <configurations mbsConfigId="legato.core.af.projectType.exe.debug.393882233" adefFileName="helloWorld.adef"/>
+  <configurations mbsConfigId="legato.core.af.projectType.exe.release.189332760" adefFileName="helloWorld.adef"/>
+</LegatoProject:LegatoBinProject>

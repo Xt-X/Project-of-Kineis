@@ -1,0 +1,25 @@
+executables:
+{
+    helloWorld = ( helloComponent )
+}
+
+processes:
+{
+    envVars:
+    {
+        LE_LOG_LEVEL = DEBUG
+    }
+
+    run:
+    {
+        ( helloWorld )
+    }
+}
+
+bindings:
+{
+	helloWorld.helloComponent.le_adc -> modemService.le_adc
+	helloWorld.helloComponent.le_pos -> positioningService.le_pos
+    	helloWorld.helloComponent.le_posCtrl -> positioningService.le_posCtrl
+}
+

@@ -1,0 +1,5 @@
+mkapp
+-v
+-t
+wp77xx
+helloWorld.adef
