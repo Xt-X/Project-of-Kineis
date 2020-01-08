@@ -1,0 +1,93 @@
+
+
+{% extends "base_generic.html" %}
+{% include "about.html"  %}
+{% block content %}
+
+<style type="text/css">
+    #plots div .text-center {
+     font-weight: bold;
+    }
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 70px;
+}
+.footer {
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
+
+#plotZone{
+    display: none;
+}
+
+</style>
+        <div id="plotZone" class="container-fluid mt-3">
+            <div id="plots" class="row">
+                <div class="col-md-6 col-xl-12 border">
+                    <div class="text-center">Température</div>
+                    <div id="MangOH.Sensors.Pressure.Temperature" name="Température"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Pressure</div>
+                    <div id="MangOH.Sensors.Pressure.Pressure" name="Pressure"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Light</div>
+                    <div id="MangOH.Sensors.Light.Level" name="Light"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Gyroscope X</div>
+                    <div id="MangOH.Sensors.Accelerometer.Gyro.X" name="Gyroscope X"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Gyroscope Y</div>
+                    <div id="MangOH.Sensors.Accelerometer.Gyro.Y" name="Gyroscope Y"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Accelerometre X</div>
+                    <div id="MangOH.Sensors.Accelerometer.Gyro.Z" name="Gyroscope Z"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Accelerometre X</div>
+                    <div id="MangOH.Sensors.Accelerometer.Acceleration.X" name="Accelerometre X"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Accelerometre Y</div>
+                    <div id="MangOH.Sensors.Accelerometer.Acceleration.Y" name="Accelerometre Y<"></div>
+                </div>
+                <div class="col-md-6 border">
+                    <div class="text-center">Accelerometre Z</div>
+                    <div id="MangOH.Sensors.Accelerometer.Acceleration.Z" name="Accelerometre Z"></div>
+                </div>
+            </div>
+        </div>
+
+
+<div class="container mt-5">
+    <div id="msgInfo"></div>
+    <div class="form-group">
+        <label for="inpNbDays">Number of days wanted:</label>
+        <input name ="nbDays" id="inpNbDays" class="form-control" type="number" value="10" min="1" max="20">
+        <div class="d-flex ">
+          <button type="button" name="nbDays" class="btn btn-primary my-2">Fetch user data (Ajax)</button>
+          <div class="spinner-border text-primary ml-3 mt-2 " hidden ></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>Range of day wanted:</div>
+        <label for="dateFrom" class="mt-2">From</label>
+        <input id="dateFrom"  class="form-control" type="date"  min="2000-01-01" max="">
+        <label for="dateTo" class="mt-2">To:</label>
+        <input id="dateTo" class="form-control" type="date"  min="2000-01-01" max="">
+        <div class="d-flex ">
+            <button type="button" name="rangeDays" class="btn btn-primary mt-2">Fetch user data (Ajax)</button>
+            <div class="spinner-border text-primary ml-3 mt-2 " hidden ></div>
+        </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

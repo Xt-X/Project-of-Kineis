@@ -28,7 +28,7 @@ def getDataForDateRange(from_date, to_date):
     if(inited == False):
         print("initCredentials(...) must be called before using the API")
         return -1
-    
+
     # Converting date into timestamp
     # To match airvantage timestamp - Multiply by 1000 & converting float into int 
     from_timestamp = int((datetime.timestamp(parse(from_date))) * 1000)
@@ -46,7 +46,7 @@ def getDataForDateRange(from_date, to_date):
 
 
 def getDataFromNoOfDays(number_of_days):
-    
+
     if(inited == False):
         print("initCredentials(...) must be called before using the API")
         return  -1
@@ -56,12 +56,12 @@ def getDataFromNoOfDays(number_of_days):
     from_timestamp = int((datetime.timestamp(datetime.now() - timedelta(days=number_of_days))) * 1000)
 
     # Append the from - to : date filter to the raw_url
-    timestamp_filter = '&from=' + str(from_timestamp) 
+    timestamp_filter = '&from=' + str(from_timestamp)
     url = raw_data_url + timestamp_filter
 
     # Calling the API
     api_call_headers = {'Authorization': 'Bearer ' + tokens['access_token']}
     api_call_response = requests.get(url, headers=api_call_headers, verify=False)
     return(api_call_response.text)
-    
+
 

@@ -1,11 +1,32 @@
+# Projet MangOH-Kinéis
+
+This repository host one of our project developped at INSA Toulouse (2019/2020) as part of our IT formation. This project was developped in coordination with the Kinéis company.
+
+## Brief summary
+
+This project aims to developp an embedded application (on a MangOH card) which is able to switch from the cellular network (5G) to the Kinéis's satellite network (Argos) when the first one is unavailable. The card embed a lot of sensors (see below [Formatting](#Formatting)), and these sensors datas have to be transfered via the prefered network (5G/Satellite). 
+Once these datas have been transfered, their endpoint is either :  
+
+* AirVantage if transfered via the cellular connection
+* Argos if transfered via the satellite connection
+
+We have developped a django application which is responsible of fetching the sensor's data from either AirVantage or Argos and displaying the data for the user.  
+We use the Rest API to fetch the data from the Airvantage platform, and a SOAP API to fetch the data from the Argos platform.  
+These data are then processed and merged, and displayed in the end-user's browser via the Plotly JavaScript library.
+
+[Example graph](https://i.imgur.com/yJdARFt.png)
+
 
 # Formatting
 
-Light : 0 to 3000 lumens : 12 bits full precision 
-Pressure : 950 to 1050 hPa +/- 0.12 hPa = 833 values : 10 bits  full precision
-Temperature : -40 to 85°C +/- 0.01°C = = 12 500 values : 14 bits full precision
+The sensors data sent via the satellite link are completly raw. We designed a payload format according to the precision of each sensors and the maximum available size of a payload inside a single Argos transmission.
 
-Accelerometer : 16 bits per axis for resolution. The measurement range depends on the sensitivy selected. 
+	Light(12)|Pressure(10)|Temperature(14)|Accelerometer(16x3)|Gyroscope(16x3)|CRC(16) = 148 bits
+
+Light : 0 to 3000 lumens : 12 bits full precision  
+Pressure : 950 to 1050 hPa +/- 0.12 hPa = 833 values : 10 bits  full precision  
+Temperature : -40 to 85°C +/- 0.01°C = = 12 500 values : 14 bits full precision  
+Accelerometer : 16 bits per axis for resolution. The measurement range depends on the sensitivy selected.  
 
 * -2/2 g : precision of 0,000061 g/bits (16384 bit/g)
 * -16/16 g : precision of ~0,000488 g/bits (less precise) (2048 bit/g)
