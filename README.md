@@ -16,8 +16,16 @@ These data are then processed and merged, and displayed in the end-user's browse
 
 [Example graph](https://i.imgur.com/yJdARFt.png)
 
+# How to start the server
 
-# Formatting
+The webserver uses Django in back-end and jQuery,Bootstrap and Plotly in front-end. You therefore need to have Python 3 installed. Once python is installed, run :
+
+	pip install Django zeep requests
+
+`requests` is used to make rest request to Airvantage, and `zeep` to make SOAP request to Argos. 
+
+
+# Formatting of satellite data
 
 The sensors data sent via the satellite link are completly raw. We designed a payload format according to the precision of each sensors and the maximum available size of a payload inside a single Argos transmission.
 
