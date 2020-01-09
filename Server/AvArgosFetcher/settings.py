@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'helloworld_project.urls'
+ROOT_URLCONF = 'AvArgosFetcher.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'helloworld_project.wsgi.application'
+WSGI_APPLICATION = 'AvArgosFetcher.wsgi.application'
 
 
 # Database
