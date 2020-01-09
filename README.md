@@ -24,6 +24,11 @@ The webserver uses Django in back-end and jQuery,Bootstrap and Plotly in front-e
 
 `requests` is used to make rest request to Airvantage, and `zeep` to make SOAP request to Argos. 
 
+Then you can `cd` to Server folder and do : 
+
+	python manage.py runserver 8000
+
+The server is now hosted on http://localhost:8000/index .
 
 # Formatting of satellite data
 
