@@ -14,7 +14,7 @@ We have developped a django application which is responsible of fetching the sen
 We use the Rest API to fetch the data from the Airvantage platform, and a SOAP API to fetch the data from the Argos platform.  
 These data are then processed and merged, and displayed in the end-user's browser via the Plotly JavaScript library.
 
-[Example graph](https://i.imgur.com/yJdARFt.png)
+![Example graph](https://i.imgur.com/yJdARFt.png)
 
 # How to start the server
 
