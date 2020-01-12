@@ -27,7 +27,7 @@ Accelerometer = "1000000000000000" # 0g
 # Example of decoding
 
 payload = Light + Pressure + Temperature + Accelerometer*6 + "0"*16 # Plus 16 bits of CRC
-msg_soap = {1578351600: payload,
+msg_soap = {1578351600: payload, #Some timestamp to test
 			1578361600: payload
 			}
 
