@@ -1,0 +1,4 @@
+django
+zeep
+python-dateutil
+gunicorn

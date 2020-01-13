@@ -1,0 +1,8 @@
+docker run -it --rm -p 8000:8000 djangotest:1
+
+-i stdin printed
+-t pseudo shell
+--rm container deleted when exited (controlC)
+-p 8000:8000 map les ports, EXPOSE 8000 dans le dockerfile suffit pas
+-p forward le port de gauche (docker VM) vers le port de droite (docker container)
+J'ai du ajouter un port forwarding dans virtual box pour faire le lien VM <-> host

@@ -1,5 +1,5 @@
 
-var django_url = "http://localhost:8000/";
+var django_url = "http://localhost:1337/";
 
 $(document).ready(function(){
 	var todayDate = new Date().toISOString().split("T")[0]; //set the max date to Today
@@ -17,7 +17,7 @@ function fetchDays() { //call to django backend when clicked, then plot fetched 
 	enableButtons(false);
 
 	var nbDays = $("input[name='nbDays']").val();
-	var formatted_url = django_url + "?nbDays=" + nbDays;
+	var formatted_url ="/?nbDays=" + nbDays;
 	sendAjax(formatted_url);
   }
 
@@ -29,7 +29,7 @@ function fetchDays() { //call to django backend when clicked, then plot fetched 
 
 	var dateFrom = $("#dateFrom").val();
 	var dateTo = $("#dateTo").val();
-	var formatted_url = django_url + "?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
+	var formatted_url = "/?dateFrom=" + dateFrom + "&dateTo=" + dateTo;
 	sendAjax(formatted_url);
 
 

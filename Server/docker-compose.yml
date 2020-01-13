@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./App
+    command: gunicorn --bind 0.0.0.0:8000 AvArgosFetcher.wsgi
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/server/static/
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    volumes:
+      - static_volume:/server/static/
+    depends_on:
+      - web
+volumes:
+  static_volume:
