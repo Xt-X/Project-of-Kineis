@@ -1,4 +1,4 @@
-# Projet MangOH-Kinéis
+# MangOH-Kinéis project
 
 This repository host one of our project developped at INSA Toulouse (2019/2020) as part of our IT formation. This project was developped in coordination with the Kinéis company.
 
@@ -16,7 +16,21 @@ These data are then processed and merged, and displayed in the end-user's browse
 
 ![Example graph](https://i.imgur.com/yJdARFt.png)
 
-# How to start the server
+
+We also designed a whole enviroment inside docker containers, to improve the scalability, security and performance of our application. Instead of using the built-in django HTTP server, we used the well-known Gunicorn server, which is made for real world deployment. We also implemented a reverse-proxy with Nginx in order to further improve the performance and the security of our deployment. To see how to use it, see [below](#use-of-docker-magic). 
+
+# Server usage
+
+## Use of docker magic
+
+You need docker-compose to run the whole enviroment. The installation depends on your OS. More information [here](https://docs.docker.com/install/).
+Once docker is installed, `cd` into the Server folder, and run :
+
+	docker-compose up --build 
+
+It will build the two images (Nginx and Gunicorn/Django), and run the containers. The website is available on http://localhost:1337/index .
+
+## Django alone (simplier)
 
 The webserver uses Django in back-end and jQuery,Bootstrap and Plotly in front-end. You therefore need to have Python 3 installed. Once python is installed, run :
 
@@ -24,7 +38,11 @@ The webserver uses Django in back-end and jQuery,Bootstrap and Plotly in front-e
 
 `requests` is used to make rest request to Airvantage, and `zeep` to make SOAP request to Argos. 
 
-Then you can `cd` to Server folder and do : 
+Then you can :  
+
+`cd Server/App` 
+
+and then :  
 
 	python manage.py runserver 8000
 
