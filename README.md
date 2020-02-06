@@ -93,3 +93,7 @@ send 3 or 4 message a day.
 * Gyro/Accelerometor BMI160 : https://www.mouser.com/datasheet/2/783/BST-BMI160-DS000-07-786474.pdf
 * Light PNJ4K01F : https://industrial.panasonic.com/content/data/SC/ds/ds4/PNJ4K01F_E.pdf
 
+## Embedded system
+Use this tutorial https://docs.legato.io/15_05/how_to_port_legacy_c.html in order to use the legato API with Programme C(programme to send message to satellite).
+
+Idea is creating a dynamical lib (.so in linux) of API of Legato, and then link this lib with the programme C.
